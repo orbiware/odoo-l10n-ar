@@ -1,8 +1,16 @@
+# Odoo 19 / Python 3.12 (odoo.sh concatenates every requirements.txt in the tree).
+# Do NOT pin git+https://github.com/pysimplesoap/pysimplesoap@stable_py3k:
+# that branch still calls inspect.getargspec (removed in 3.11) and pip metadata
+# generation fails. 1.8.22 is the LTS wheel that replaced getargspec (Oct 2023).
 pyOpenSSL
 #M2Crypto<=0.32
 httplib2>=0.7
-git+https://github.com/pysimplesoap/pysimplesoap@stable_py3k
+pysimplesoap~=1.8.22
 # fpdf>=1.7.2
 # dbf>=0.88.019
 # Pillow>=2.0.0
-git+https://github.com/reingart/pyafipws@py3k
+# The v15 AFIP WS stack (l10n_ar_afipws*) is not installable on 19.0; skip the
+# git pyafipws pin so a clean odoo.sh build does not clone another legacy sdist.
+# If a live module needs it again, use the ADHOC 19.0 pin:
+# git+https://github.com/filoquin/pyafipws.git@py3k
+# git+https://github.com/reingart/pyafipws@py3k
